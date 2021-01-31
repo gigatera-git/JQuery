@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+  <meta charset="UTF-8">
+  <title>이미지 슬라이드</title>
+  <script language="javascript" type="text/javascript" src="./config/js/jquery-3.1.0.js"></script>
+  <script language="javascript" type="text/javascript" src="./config/js/extend.js"></script>
+  <script language="javascript" type="text/javascript">
+  $(document).ready(function(){
+	
+	var $oPage = $("#slides > #paging").find("page");
+	var $oUl = $("#slides").find("ul");
+	var $oUlLi = $("#slides").find("ul").find("li");
+	var $oArrow = $(".arrow");
+	var totalCount = $("#slides").find("ul").find("li").length;
+	var wid = $("#slides").css('width').replace('px',''); //alert(wid);
+	var curPos = 0;
+	var amount = 0;
+	var flip = false;
+
+	var t = setInterval(function(){
+
+		if (curPos==totalCount-1) { flip=true; }
+		if (curPos==0) { flip=false; }
+
+		if (!flip) {
+			amount = -(wid*(curPos+1));
+			curPos++;
+		} else {
+			amount = -(wid*(curPos-1));
+			curPos--;
+		}
+
+		setPage(amount,curPos);
+		setPaging(curPos);
+		
+	},3000);
+
+	$oArrow.each(function(index,obj){
+		$(this).on('click',function(){
+			if (index<1 && curPos<totalCount-1) {
+				amount = -(wid*(curPos+1));
+				curPos++;
+			} else if (index>=1 && curPos>=1) {
+				amount = -(wid*(curPos-1));
+				curPos--;
+			}
+			setPage(amount,curPos);
+			setPaging(curPos);
+		});
+	});
+
+	
+	$oPage.each(function(index,obj){
+		$(this).click(function(){
+			amount = -(wid*(index));
+			curPos = index;
+			setPage(amount,curPos);
+		});
+	});
+
+	function setPage(amount,curPos) {
+		$("#slides > ul").animate({"left":amount});
+		setPaging(curPos);
+	}
+
+	function setPaging(curPos) {
+		$oPage.css("color","white");
+		$oPage.eq(curPos).css("color","red");
+	}
+
+
+
+   });
+  </script>
+  <style type="text/css">
+	ol, ul,li {
+		list-style: none;
+		margin:0;
+		padding:0;
+	}
+	
+	#slides {
+		margin:0;
+		padding:0;
+		width:217px;
+		height:232px;
+		overflow:hidden;	
+		position:relative;
+		margin:auto;
+	}
+
+	#slides > ul {
+		border:1px solid black;
+		width:1085px;
+		height:232px;
+		position:absolute;
+		top:0;
+		left:0;
+	}
+	#slides > ul > li {
+		display:inline-block;
+		float:left;
+	}
+
+	.arrow {
+		font-family:"Arial Black";
+		font-size:30px;
+		font-weight:bold;
+		color:black;
+		position:absolute;
+		top:40%;
+	}
+	.arrow:hover {
+		color:red;
+		cursor:pointer;
+	}
+	#slides > #arrow_left {
+		left:5px;
+	}
+	#slides > #arrow_right {
+		right:5px;
+	}
+	#slides > #paging {
+		position:absolute;
+		right:5px;
+		color:white;
+	}
+	#slides > #paging > page {
+		display:inline-block;
+		float:left;
+		cursor:pointer;
+	}
+	#slides > #paging > page:first-child {
+		color:red;
+	}
+  </style>
+ </head>
+ <body>
+
+
+	<div id="slides">
+		<ul>
+			<li><img src="images/slides/20200727223203_21.jpg" border="0"></li>
+			<li><img src="images/slides/20200727223203_22.jpg" border="0"></li>
+			<li><img src="images/slides/20200727223203_23.jpg" border="0"></li>
+			<li><img src="images/slides/20200727223203_24.jpg" border="0"></li>
+			<li><img src="images/slides/20200727223203_25.jpg" border="0"></li>
+		</ul>
+		<div class="arrow" id="arrow_left" > < </div>
+		<div class="arrow" id="arrow_right"> > </div>
+		<div id="paging">
+				<page>●</page>
+				<page>●</page>
+				<page>●</page>
+				<page>●</page>
+				<page>●</page>
+		</div>
+	<div>
+	
+
+ </body>
+</html>
