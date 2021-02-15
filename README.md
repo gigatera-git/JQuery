@@ -5,3 +5,6 @@
   # sns_share.js
     : for facebook, twitter, google plus, kakao(talk, story), naver(line,blog,band,pholar), pinterest
     : You can share your webpage with 10 difference social media
+    
+  # SnsLogin/naver
+    : login in with your naver id on your website
